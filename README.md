@@ -52,7 +52,7 @@ The resulting static binary is located at `target/x86_64-unknown-linux-musl/rele
 plotcap --help
 plotcap 0.1.0
 Simeon Miteff <simeon.miteff@corelight.com>
-Plot packet and data rates over time given a PCAP file
+Plot packet and data rates over time given a PCAP file, with gnuplot.
 
 USAGE:
     plotcap [OPTIONS] --read <FILE> --output <FILE>
