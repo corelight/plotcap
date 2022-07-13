@@ -67,7 +67,7 @@ OPTIONS:
 
 ## Examples
 
-`smtp.pcap` is a ~2h, ~4.3GB file with 8k packets in it. To reduce the number of plot points we increase the aggregation
+`smtp.pcap` is a ~2h, ~4.3GB file with 8 million packets in it. To reduce the number of plot points we increase the aggregation
 to 60s with `-i 60s`:
 
 ```shell
