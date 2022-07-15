@@ -99,7 +99,7 @@ fn main() -> Result<()> {
 
     write!(&mut writer, "#!/usr/bin/env -S gnuplot -p\n#\n")?;
 
-    write!(&mut writer, "# Generated with plotcap (https://github.com/blah/blah)\n")?;
+    write!(&mut writer, "# Generated with plotcap (https://github.com/corelight/plotcap)\n")?;
     write!(&mut writer, "# Input file: {}\n", cli.input_filename.display())?;
     write!(&mut writer, "# Date: {}\n\n", Utc::now())?;
 
