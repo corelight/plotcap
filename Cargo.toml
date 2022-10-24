@@ -12,9 +12,9 @@ keywords = ["pcap", "cli", "gnuplot"]
 categories = ["command-line-utilities", "network-programming"]
 
 [dependencies]
-pcap-parser = "0"
+pcap-parser = "0.14"
 anyhow = "1"
-chrono = "0"
+chrono = "0.4"
 clap = { version = "3", features = ["cargo", "derive"] }
 humantime = "2"
 time = "0.1"
