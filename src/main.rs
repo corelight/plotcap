@@ -99,18 +99,18 @@ fn main() -> Result<()> {
 
     write!(&mut writer, "#!/usr/bin/env -S gnuplot -p\n#\n")?;
 
-    write!(
+    writeln!(
         &mut writer,
-        "# Generated with plotcap (https://github.com/corelight/plotcap)\n"
+        "# Generated with plotcap (https://github.com/corelight/plotcap)"
     )?;
-    write!(
+    writeln!(
         &mut writer,
-        "# Input file: {}\n",
+        "# Input file: {}",
         cli.input_filename.display()
     )?;
     write!(&mut writer, "# Date: {}\n\n", Utc::now())?;
 
-    write!(&mut writer, "$data << EOD\n")?;
+    writeln!(&mut writer, "$data << EOD")?;
 
     loop {
         match reader.next() {
@@ -189,9 +189,9 @@ fn main() -> Result<()> {
             let rate_capture_bytes = f64::from(byte_count_capture) / elapsed_since_last_packet_secs;
 
             // Gnuplot data row
-            write!(
+            writeln!(
                 &mut writer,
-                "{} {:.2} {:.2} {:.2}\n",
+                "{} {:.2} {:.2} {:.2}",
                 elapsed_since_first_packet_secs, rate_packets, rate_wire_bytes, rate_capture_bytes
             )?;
 
@@ -207,7 +207,7 @@ fn main() -> Result<()> {
     }
 
     let size =
-        Byte::from_bytes((&infile).metadata().unwrap().len() as u128).get_appropriate_unit(true);
+        Byte::from_bytes(infile.metadata().unwrap().len() as u128).get_appropriate_unit(true);
 
     let fname = Path::new(&cli.input_filename).file_name().unwrap();
 
