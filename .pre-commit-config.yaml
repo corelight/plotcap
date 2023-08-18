@@ -16,3 +16,7 @@ repos:
     rev: v0.9.0
     hooks:
       - id: yamlfmt
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+      - id: fmt

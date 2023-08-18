@@ -1,14 +1,14 @@
 // Copyright (c) 2022, Corelight, Inc. All rights reserved.
 
-use std::fs::{File, metadata, set_permissions};
+use std::fs::{metadata, set_permissions, File};
+use std::io::{BufWriter, Write};
 use std::os::unix::fs::PermissionsExt;
-use std::io::{Write, BufWriter};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result};
 use byte_unit::Byte;
-use chrono::{Duration, NaiveDateTime};
 use chrono::prelude::*;
+use chrono::{Duration, NaiveDateTime};
 use clap::Parser;
 use humantime::{format_duration, parse_duration};
 use pcap_parser::{create_reader, Block, PcapBlockOwned, PcapError};
@@ -99,8 +99,15 @@ fn main() -> Result<()> {
 
     write!(&mut writer, "#!/usr/bin/env -S gnuplot -p\n#\n")?;
 
-    write!(&mut writer, "# Generated with plotcap (https://github.com/corelight/plotcap)\n")?;
-    write!(&mut writer, "# Input file: {}\n", cli.input_filename.display())?;
+    write!(
+        &mut writer,
+        "# Generated with plotcap (https://github.com/corelight/plotcap)\n"
+    )?;
+    write!(
+        &mut writer,
+        "# Input file: {}\n",
+        cli.input_filename.display()
+    )?;
     write!(&mut writer, "# Date: {}\n\n", Utc::now())?;
 
     write!(&mut writer, "$data << EOD\n")?;
@@ -206,7 +213,8 @@ fn main() -> Result<()> {
 
     let dur = format_duration((previous_packet_ts - first_packet_ts).to_std().unwrap());
 
-    write!(&mut writer,
+    write!(
+        &mut writer,
         "EOD
 
 set title 'Packet/data rate plot for {} file {:?} ({} / {})'
@@ -226,10 +234,12 @@ pause mouse close\n",
         file_type, fname, size, dur
     )?;
 
-    let mut perms = metadata(&cli.output_filename).context(format!(
-        "Unable to get file permissions for {}",
-        cli.output_filename.display()
-    ))?.permissions();
+    let mut perms = metadata(&cli.output_filename)
+        .context(format!(
+            "Unable to get file permissions for {}",
+            cli.output_filename.display()
+        ))?
+        .permissions();
 
     perms.set_mode(0o755);
 
