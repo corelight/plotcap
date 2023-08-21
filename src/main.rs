@@ -12,7 +12,7 @@ use chrono::{Duration, NaiveDateTime};
 use clap::Parser;
 use humantime::{format_duration, parse_duration};
 use pcap_parser::{create_reader, Block, PcapBlockOwned, PcapError};
-use time::OutOfRangeError;
+use chrono::OutOfRangeError;
 
 const POWER_BITS: u8 = 0x7f;
 const EXPONENT_FLAG_BIT: u8 = 0x80;
