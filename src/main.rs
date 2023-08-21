@@ -56,7 +56,7 @@ struct Cli {
     #[clap(short = 'o', long = "output", value_parser, value_name = "FILE")]
     output_filename: PathBuf,
 
-    #[clap(short = 'i', long = "interval", parse(try_from_str = parse_duration_arg), value_name = "INTERVAL", default_value = "1 second")]
+    #[clap(short = 'i', long = "interval", value_parser = parse_duration_arg, value_name = "INTERVAL", default_value = "1 second")]
     minimum_reporting_period: chrono::Duration,
 }
 
