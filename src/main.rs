@@ -43,7 +43,7 @@ fn make_pcapng_timestamp(if_tsresol: u8) -> impl Fn(u32, u32) -> NaiveDateTime {
             // base 10 so power of 3 would mean 1/1000 second
             (ts / divisor, (ts % divisor * NANOS_PER_SECOND) / divisor)
         };
-        NaiveDateTime::from_timestamp(secs as i64, nsecs as u32)
+        NaiveDateTime::from_timestamp_opt(secs as i64, nsecs as u32).unwrap()
     }
 }
 
@@ -85,7 +85,7 @@ fn main() -> Result<()> {
 
     let mut writer = BufWriter::new(&outfile);
 
-    let epoch_ts: NaiveDateTime = NaiveDateTime::from_timestamp(0, 0);
+    let epoch_ts: NaiveDateTime = NaiveDateTime::from_timestamp_opt(0, 0).unwrap();
     let mut this_packet_ts = epoch_ts;
     let mut first_packet_ts = epoch_ts;
     let mut previous_packet_ts = epoch_ts;
@@ -119,7 +119,7 @@ fn main() -> Result<()> {
                     PcapBlockOwned::Legacy(b) => (
                         b.origlen,
                         b.caplen,
-                        NaiveDateTime::from_timestamp(b.ts_sec as i64, b.ts_usec * NANOS_PER_MICRO),
+                        NaiveDateTime::from_timestamp_opt(b.ts_sec as i64, b.ts_usec * NANOS_PER_MICRO).unwrap(),
                     ),
                     PcapBlockOwned::NG(b) => {
                         file_type = "pcapng";
