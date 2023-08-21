@@ -8,11 +8,11 @@ use std::path::{Path, PathBuf};
 use anyhow::{Context, Result};
 use byte_unit::Byte;
 use chrono::prelude::*;
+use chrono::OutOfRangeError;
 use chrono::{Duration, NaiveDateTime};
 use clap::Parser;
 use humantime::{format_duration, parse_duration};
 use pcap_parser::{create_reader, Block, PcapBlockOwned, PcapError};
-use chrono::OutOfRangeError;
 
 const POWER_BITS: u8 = 0x7f;
 const EXPONENT_FLAG_BIT: u8 = 0x80;
@@ -119,7 +119,11 @@ fn main() -> Result<()> {
                     PcapBlockOwned::Legacy(b) => (
                         b.origlen,
                         b.caplen,
-                        NaiveDateTime::from_timestamp_opt(b.ts_sec as i64, b.ts_usec * NANOS_PER_MICRO).unwrap(),
+                        NaiveDateTime::from_timestamp_opt(
+                            b.ts_sec as i64,
+                            b.ts_usec * NANOS_PER_MICRO,
+                        )
+                        .unwrap(),
                     ),
                     PcapBlockOwned::NG(b) => {
                         file_type = "pcapng";
