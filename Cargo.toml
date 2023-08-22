@@ -15,6 +15,6 @@ categories = ["command-line-utilities", "network-programming"]
 pcap-parser = "0.14"
 anyhow = "1"
 chrono = { version = "0.4", default-features = false, features = ["alloc", "std", "clock"] }
-clap = { version = "3", features = ["cargo", "derive"] }
+clap = { version = "4", features = ["cargo", "derive"] }
 humantime = "2"
 byte-unit = "4"
